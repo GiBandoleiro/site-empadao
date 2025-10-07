@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empadão Salgados - Faça seu Pedido Online</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/D92323/FFFFFF?text=E" type="image/png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        :root {
+            --primary: #D92323; /* Red */
+            --secondary: #F2B705; /* Yellow */
+            
+            /* Light Theme */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #f9fafb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+        }
+
+        body.dark-mode {
+            /* Dark Theme */
+            --bg-primary: #1f2937;
+            --bg-secondary: #111827;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border: #374151;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: none;
+            color: white !important; /* Ensure text is always white */
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 14px 0 rgba(217, 35, 35, 0.3);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(217, 35, 35, 0.4);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        body.dark-mode header {
+             background-color: rgba(17, 24, 39, 0.7);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        .toggle-group {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            overflow: hidden;
+            width: fit-content;
+            background-color: var(--bg-secondary);
+        }
+        .toggle-btn {
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .toggle-btn.active {
+            color: white !important; /* Ensure text is always white */
+            background-color: var(--primary);
+            border-radius: 99px;
+        }
+
+        .theme-toggle-btn {
+            background: transparent;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle-btn:hover {
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 8px;
+        }
+        .input-field:focus {
+            --tw-ring-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .leaflet-tile { filter: brightness(1); }
+        body.dark-mode .leaflet-tile { filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7); }
+
+        .product-card {
+            background-color: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--border);
+        }
+        .quantity-btn {
+            background-color: var(--border);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 1.25rem;
+            line-height: 1;
+            transition: all 0.2s ease;
+        }
+         .quantity-btn:hover {
+            transform: scale(1.1);
+        }
+        .quantity-btn.increase {
+            background-color: var(--primary);
+            color: white;
+        }
+        input[type="radio"] {
+            accent-color: var(--primary);
+        }
+    </style>
+</head>
+<body class="bg-bg-secondary">
+    
+    <header>
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="nav-link text-2xl font-bold flex items-center gap-2 text-primary" data-page="home">
+                Empadão Salgados
+            </a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="#" class="nav-link text-text-primary hover:text-primary transition px-4 py-2" data-page="home">Início</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary transition px-4 py-2" data-page="about">Sobre</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary transition px-4 py-2" data-page="contact">Contato</a>
+                <a href="#" class="nav-link btn text-sm" data-page="menu">Faça seu Pedido</a>
+                <button id="theme-toggle" class="theme-toggle-btn">
+                    <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+            </div>
+            <div class="md:hidden flex items-center gap-2">
+                 <button id="theme-toggle-mobile" class="theme-toggle-btn">
+                    <svg id="theme-icon-sun-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg id="theme-icon-moon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+                <button id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col items-center space-y-3 bg-bg-primary border-t border-border">
+            <a href="#" class="nav-link text-text-primary hover:text-primary transition w-full text-center py-2" data-page="home">Início</a>
+            <a href="#" class="nav-link text-text-primary hover:text-primary transition w-full text-center py-2" data-page="about">Sobre</a>
+            <a href="#" class="nav-link text-text-primary hover:text-primary transition w-full text-center py-2" data-page="contact">Contato</a>
+            <a href="#" class="nav-link btn w-full mt-2" data-page="menu">Faça seu Pedido</a>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- HOME PAGE -->
+        <section id="home-page" class="page">
+            <div class="bg-bg-primary">
+                <div class="container mx-auto grid md:grid-cols-2 items-center gap-12 px-6 py-16 md:py-24">
+                    <div class="text-center md:text-left">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-text-primary">
+                            O Sabor da Festa, <br> <span class="text-primary">Direto pra Você.</span>
+                        </h1>
+                        <p class="mt-6 text-lg text-text-secondary max-w-lg">
+                            Os melhores salgados de Araraquara para sua festa, evento ou para o lanche da tarde. Qualidade e tradição em cada mordida.
+                        </p>
+                        <div class="mt-8">
+                            <a href="#" class="btn btn-lg nav-link" data-page="menu">Monte seu Pedido Agora</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400/0000/fff?text=bannerHome.webp" alt="Variedade de salgados da Empadão Salgados" class="w-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Savories Section -->
+            <div class="py-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Nossos Sabores</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Card 1 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/300x200/D92323/FFFFFF?text=salgado.webp" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Coxinha de Frango</h3>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/300x200/F2B705/1f2937?text=salgado.webp" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Esfiha de Carne</h3>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/300x200/D92323/FFFFFF?text=salgado.webp" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Bolinha de Queijo</h3>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/300x200/F2B705/1f2937?text=salgado.webp" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Empada de Frango</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT PAGE -->
+        <section id="about-page" class="page py-20">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Nossa História</h2>
+                 <div class="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+                    <div>
+                        <img src="https://placehold.co/500x350/D92323/FFFFFF?text=bannerSobre.webp" alt="Fachada da Empadão Salgados" class="rounded-xl shadow-lg w-full">
+                    </div>
+                    <div class="text-text-secondary space-y-4 text-lg">
+                        <p>A <strong>Empadão Salgados</strong> nasceu da paixão por receitas de família e o desejo de levar sabor e alegria para os lares de Araraquara. Há anos, nos dedicamos a produzir salgados com ingredientes frescos e selecionados, mantendo a qualidade e o carinho em cada etapa da produção.</p>
+                        <p>Seja para uma grande comemoração ou um pequeno encontro, nosso objetivo é ser parte dos seus momentos mais felizes, oferecendo praticidade e um sabor inesquecível.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- MENU/ORDER PAGE -->
+        <section id="menu-page" class="page py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-display text-center mb-4 section-title">Monte seu Pedido</h2>
+                <p class="text-center text-text-secondary mb-8 max-w-2xl mx-auto">Selecione o tipo de compra, o tamanho do salgado e adicione ao seu carrinho.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-10">
+                    <div class="toggle-group p-1">
+                        <button id="btn-venda" class="toggle-btn active" data-type="venda">Venda</button>
+                        <button id="btn-revenda" class="toggle-btn" data-type="revenda">Revenda</button>
+                    </div>
+                     <div class="toggle-group p-1">
+                        <button id="btn-pequeno" class="toggle-btn active" data-type="pequeno">Pequeno</button>
+                        <button id="btn-grande" class="toggle-btn" data-type="grande">Grande</button>
+                    </div>
+                </div>
+
+                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-10">
+                     <div class="toggle-group p-1">
+                        <button id="btn-frituras" class="toggle-btn active" data-category="Frituras">🍴 Frituras</button>
+                        <button id="btn-assados" class="toggle-btn" data-category="Assados">🧁 Assados</button>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-12">
+                    <div class="lg:col-span-2">
+                        <div id="frituras-section">
+                            <h3 class="text-2xl font-bold mb-6 border-l-4 border-primary pl-4">Frituras</h3>
+                            <div id="frituras-list" class="grid sm:grid-cols-2 gap-6"></div>
+                        </div>
+                        <div id="assados-section" class="mt-12">
+                            <h3 class="text-2xl font-bold mb-6 border-l-4 border-secondary pl-4">Assados</h3>
+                            <div id="assados-list" class="grid sm:grid-cols-2 gap-6"></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1">
+                        <div class="card p-6 shadow-lg sticky top-28">
+                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                Meu Pedido
+                            </h3>
+                            <div id="cart-items" class="space-y-3 mb-2 min-h-[80px] border-t border-b border-border py-4">
+                                <p class="text-text-secondary text-center py-4">Seu carrinho está vazio.</p>
+                            </div>
+                            <div class="flex justify-end mb-4">
+                               <button id="clear-cart-btn" class="text-sm text-primary hover:underline font-medium disabled:text-text-secondary disabled:no-underline flex items-center gap-1" disabled>
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                   </svg>
+                                   <span>Limpar Carrinho</span>
+                               </button>
+                            </div>
+                            <form id="order-form" class="space-y-4">
+                                <input type="text" id="customer-name" placeholder="Seu Nome Completo" required class="w-full p-3 focus:outline-none focus:ring-2 input-field">
+                                <input type="text" id="customer-address" placeholder="Endereço para Entrega" required class="w-full p-3 focus:outline-none focus:ring-2 input-field">
+                                
+                                <div class="pt-4 border-t border-border">
+                                    <h4 class="font-semibold text-text-primary mb-2">Forma de Pagamento</h4>
+                                    <div class="space-y-2 text-text-secondary">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="payment" value="Pix" checked><span>Pix</span></label>
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="payment" value="Cartão"><span>Cartão de Crédito/Débito</span></label>
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="payment" value="Dinheiro"><span>Dinheiro</span></label>
+                                    </div>
+                                    <p class="text-xs text-text-secondary mt-3">Obs: O pagamento será combinado e realizado no momento da entrega/retirada. Nada será cobrado pelo site.</p>
+                                </div>
+
+                                <button type="submit" class="btn w-full !text-lg mt-2 flex items-center justify-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.182-.15-.38-.25z"/></svg>
+                                    <span>Finalizar via WhatsApp</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT PAGE -->
+        <section id="contact-page" class="page py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Contato e Localização</h2>
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <div class="card p-8 shadow-md">
+                        <div class="space-y-5 text-text-secondary text-base">
+                            <p><strong>Endereço:</strong><br>R. Pará, 16 - Jardim Brasil (Vila Xavier), Araraquara - SP, 14811-070</p>
+                             <div>
+                                <p><strong>Telefones:</strong></p>
+                                <p>(16) 3337-3713</p>
+                                <a href="#" id="contact-whatsapp-link" target="_blank" class="inline-flex items-center gap-2 text-green-500 hover:underline">
+                                    (16) 99627-0205 (WhatsApp)
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.182-.15-.38-.25z"/></svg>
+                                </a>
+                            </div>
+                            <p><strong>Instagram:</strong><br><a href="https://www.instagram.com/empadaosalgados_araraquara" target="_blank" class="text-primary hover:underline">@empadaosalgados_araraquara</a></p>
+                            <div>
+                                <p><strong>Horário de Funcionamento:</strong></p>
+                                <ul class="list-inside ml-2">
+                                    <li>Terça a Sábado: 05:30 – 18:00</li>
+                                    <li>Segunda: 05:30 – 18:00</li>
+                                    <li>Domingo: Fechado</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="map" class="shadow-md"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-bg-primary border-t border-border pt-16 pb-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-bold text-2xl mb-2">Empadão Salgados</p>
+            <p class="text-text-secondary mb-6">Qualidade e tradição em Araraquara-SP</p>
+            <div class="mt-8 border-t border-border pt-6">
+                <p class="text-sm text-text-secondary">&copy; 2025 Empadão Salgados. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const products = {
+            pequeno: [
+                // Fritos
+                { id: 1, name: "Balãozinho De Presunto e Queijo", category: "Frituras" },
+                { id: 2, name: "Bolinha De Queijo", category: "Frituras" },
+                { id: 3, name: "Bolinha De Frango c/Catupiry", category: "Frituras" },
+                { id: 4, name: "Coxinha De Frango", category: "Frituras" },
+                { id: 5, name: "Croquete De Carne", category: "Frituras" },
+                { id: 6, name: "Kibe Com Carne", category: "Frituras" },
+                { id: 7, name: "Kibe Com Catupiry", category: "Frituras" },
+                { id: 8, name: "Risolis De Carne", category: "Frituras" },
+                { id: 9, name: "Risolis De Presunto e Mussarela", category: "Frituras" },
+                { id: 10, name: "Risolis De Queijo", category: "Frituras" },
+                { id: 11, name: "Risolis De Milho c/ Catupiry", category: "Frituras" },
+                { id: 12, name: "Espetinho De Frango", category: "Frituras", special: 'espetinho' },
+                // Assados
+                { id: 13, name: "Doguinho (Salsicha)", category: "Assados" },
+                { id: 14, name: "Esfiha De Carne", category: "Assados" },
+                { id: 15, name: "Esfiha de frango com catupiry", category: "Assados" },
+                { id: 16, name: "Empada De Frango", category: "Assados" },
+                { id: 17, name: "Empada De Palmito", category: "Assados" },
+                { id: 18, name: "Empada De Brócolis E Queijo c/Catupiry", category: "Assados" },
+                { id: 19, name: "Empada De calabresa c/ Catupiry", category: "Assados" },
+                { id: 20, name: "Pãozinho De Calabresa c/ Catupiry", category: "Assados" },
+                { id: 21, name: "Pãozinho De Brócolis E Mussarela", category: "Assados" },
+            ],
+            grande: [
+                // Fritos
+                { id: 101, name: "Balão De Queijo", category: "Frituras" },
+                { id: 102, name: "Bola De Frango c/ Catupiry", category: "Frituras" },
+                { id: 103, name: "Coxinha De Carne", category: "Frituras" },
+                { id: 104, name: "Coxinha De Frango", category: "Frituras" },
+                { id: 105, name: "Croquete De Carne", category: "Frituras" },
+                { id: 106, name: "Croquete De Presunto E Queijo", category: "Frituras" },
+                { id: 107, name: "Kibe c/Carne", category: "Frituras" },
+                { id: 108, name: "Kibe c/Catupiry", category: "Frituras" },
+                { id: 109, name: "Risolis De Carne", category: "Frituras" },
+                { id: 110, name: "Risolis De Presunto E Queijo", category: "Frituras" },
+                { id: 111, name: "Risolis De Queijo", category: "Frituras" },
+                // Assados
+                { id: 112, name: "Enrolado De Salsicha", category: "Assados" },
+                { id: 113, name: "Esfiha De Carne", category: "Assados" },
+                { id: 114, name: "Esfiha De Frango c/ Catupiry", category: "Assados" },
+                { id: 115, name: "Empada De Frango", category: "Assados" },
+                { id: 116, name: "Empada De Palmito", category: "Assados" },
+                { id: 117, name: "Hambúrguer Com Catupiry", category: "Assados" },
+                { id: 118, name: "Titanic De Calabresa c/Catupiry", category: "Assados" },
+                { id: 119, name: "Titanic De Carne c/ Bacon", category: "Assados" },
+                { id: 120, name: "Vulcão De Queijo", category: "Assados" },
+            ]
+        };
+
+        const prices = {
+            venda: { pequeno: 1.00, grande: 6.50 },
+            revenda: { pequeno: 0.80, grande: 4.00 },
+            espetinho: 1.50
+        };
+
+        let currentPriceMode = 'venda';
+        let currentSizeMode = 'pequeno';
+        let cart = {}; 
+        let mapInstance = null;
+        const WHATSAPP_NUMBER = "5516996270205";
+
+        const pages = document.querySelectorAll('.page');
+        const friturasContainer = document.getElementById('frituras-list');
+        const assadosContainer = document.getElementById('assados-list');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const clearCartBtn = document.getElementById('clear-cart-btn');
+
+        const navigateTo = (pageId) => {
+            pages.forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(`${pageId}-page`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+                if (pageId === 'contact' && !mapInstance) {
+                    initializeMap();
+                }
+            }
+        };
+
+        const setupEventListeners = () => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateTo(link.dataset.page);
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                });
+            });
+
+            document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+            
+            document.getElementById('btn-venda').addEventListener('click', () => switchPriceMode('venda'));
+            document.getElementById('btn-revenda').addEventListener('click', () => switchPriceMode('revenda'));
+            document.getElementById('btn-pequeno').addEventListener('click', () => switchSizeMode('pequeno'));
+            document.getElementById('btn-grande').addEventListener('click', () => switchSizeMode('grande'));
+            
+            document.getElementById('btn-frituras').addEventListener('click', () => switchCategoryView('Frituras'));
+            document.getElementById('btn-assados').addEventListener('click', () => switchCategoryView('Assados'));
+
+            document.getElementById('order-form').addEventListener('submit', handleOrderSubmit);
+            document.getElementById('contact-whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}`;
+            clearCartBtn.addEventListener('click', clearCartAndUI);
+        };
+
+        const switchCategoryView = (categoryToShow) => {
+            const friturasBtn = document.getElementById('btn-frituras');
+            const assadosBtn = document.getElementById('btn-assados');
+            const friturasSection = document.getElementById('frituras-section');
+            const assadosSection = document.getElementById('assados-section');
+
+            const isFrituras = categoryToShow === 'Frituras';
+            
+            friturasSection.style.display = isFrituras ? 'block' : 'none';
+            assadosSection.style.display = isFrituras ? 'none' : 'block';
+            
+            friturasBtn.classList.toggle('active', isFrituras);
+            assadosBtn.classList.toggle('active', !isFrituras);
+        };
+
+
+        const renderProducts = () => {
+            friturasContainer.innerHTML = '';
+            assadosContainer.innerHTML = '';
+            
+            const productList = products[currentSizeMode];
+
+            productList.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <h4 class="font-bold text-md mb-4 flex-grow">${product.name}</h4>
+                        <div class="flex items-center justify-center gap-3">
+                            <button class="quantity-btn" data-product-id="${product.id}" data-action="decrease">-</button>
+                            <span id="quantity-${product.id}" class="text-lg font-bold w-10 text-center text-text-primary">0</span>
+                            <button class="quantity-btn increase" data-product-id="${product.id}" data-action="increase">+</button>
+                        </div>
+                    </div>
+                `;
+                const container = product.category === "Frituras" ? friturasContainer : assadosContainer;
+                container.innerHTML += productCard;
+            });
+
+            document.querySelectorAll('.quantity-btn').forEach(btn => btn.addEventListener('click', handleQuantityChange));
+        };
+
+        const clearCartAndUI = () => {
+            cart = {};
+            updateCartDisplay();
+            
+            const productList = products[currentSizeMode];
+            productList.forEach(p => {
+                const quantityEl = document.getElementById(`quantity-${p.id}`);
+                if (quantityEl) quantityEl.textContent = '0';
+            });
+        };
+
+        const switchPriceMode = (mode) => {
+            if (currentPriceMode === mode) return;
+            if (Object.keys(cart).length > 0 && !confirm("Mudar o tipo de preço irá limpar seu carrinho. Deseja continuar?")) return;
+            
+            currentPriceMode = mode;
+            document.getElementById('btn-venda').classList.toggle('active', mode === 'venda');
+            document.getElementById('btn-revenda').classList.toggle('active', mode === 'revenda');
+            clearCartAndUI();
+        };
+
+        const switchSizeMode = (mode) => {
+            if (currentSizeMode === mode) return;
+            if (Object.keys(cart).length > 0 && !confirm("Mudar o tamanho do salgado irá limpar seu carrinho. Deseja continuar?")) return;
+            
+            currentSizeMode = mode;
+            document.getElementById('btn-pequeno').classList.toggle('active', mode === 'pequeno');
+            document.getElementById('btn-grande').classList.toggle('active', mode === 'grande');
+            
+            clearCartAndUI();
+            renderProducts(); 
+        };
+
+        const handleQuantityChange = (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            const action = e.target.dataset.action;
+            let currentQuantity = cart[productId] || 0;
+
+            if (action === 'increase') {
+                currentQuantity++;
+            } else if (action === 'decrease' && currentQuantity > 0) {
+                currentQuantity--;
+            }
+
+            if (currentQuantity === 0) delete cart[productId];
+            else cart[productId] = currentQuantity;
+
+            updateCartDisplay();
+            document.getElementById(`quantity-${productId}`).textContent = cart[productId] || 0;
+        };
+
+        const updateCartDisplay = () => {
+            const hasItems = Object.keys(cart).length > 0;
+            clearCartBtn.disabled = !hasItems;
+
+            if (!hasItems) {
+                cartItemsContainer.innerHTML = '<p class="text-text-secondary text-center py-4">Seu carrinho está vazio.</p>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            const allProducts = [...products.pequeno, ...products.grande];
+
+            const cartFrituras = [];
+            const cartAssados = [];
+
+            Object.entries(cart).forEach(([productId, quantity]) => {
+                const product = allProducts.find(p => p.id == productId);
+                if (!product) return;
+                
+                const itemHtml = `<div class="flex justify-between items-center text-sm text-text-primary"><span><strong>${quantity}x</strong> ${product.name}</span></div>`;
+
+                if(product.category === 'Frituras') cartFrituras.push(itemHtml);
+                else cartAssados.push(itemHtml);
+            });
+
+            if (cartFrituras.length > 0) {
+                cartItemsContainer.innerHTML += `<h4 class="font-semibold text-primary text-sm">Frituras</h4>` + cartFrituras.join('');
+            }
+            if (cartAssados.length > 0) {
+                cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-sm mt-2">Assados</h4>` + cartAssados.join('');
+            }
+        };
+        
+        const handleOrderSubmit = (e) => {
+            e.preventDefault();
+            if (Object.keys(cart).length === 0) return alert("Seu carrinho está vazio!");
+            const name = document.getElementById('customer-name').value;
+            const address = document.getElementById('customer-address').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+            if (!name || !address) return alert("Por favor, preencha seu nome e endereço.");
+            
+            let message = "Olá, gostaria de finalizar meu pedido:\n\n";
+            let total = 0;
+            const allProducts = [...products.pequeno, ...products.grande];
+
+            Object.entries(cart).forEach(([productId, quantity]) => {
+                const product = allProducts.find(p => p.id == productId);
+                if (!product) return;
+                
+                let price;
+                if (product.special === 'espetinho') {
+                    price = prices.espetinho;
+                } else {
+                    price = prices[currentPriceMode][currentSizeMode];
+                }
+                const subtotal = quantity * price;
+                total += subtotal;
+                message += `*${quantity}x* ${product.name} - *R$ ${subtotal.toFixed(2).replace('.', ',')}*\n`;
+            });
+            
+            message += `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
+            message += `\n----------------------------------\n*Dados para Entrega*\n----------------------------------\n`;
+            message += `*Nome:* ${name}\n*Endereço:* ${address}\n`;
+            message += `*Tipo de Pedido:* ${currentPriceMode.charAt(0).toUpperCase() + currentPriceMode.slice(1)}\n`;
+            message += `*Tamanho:* ${currentSizeMode.charAt(0).toUpperCase() + currentSizeMode.slice(1)}\n`;
+            message += `*Forma de Pagamento:* ${paymentMethod}`;
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        };
+
+        const initializeMap = () => {
+            const location = { coords: [-22.8153, -47.1661], address: 'R. Pará, 16 - Jd. Brasil, Araraquara - SP' };
+            if(!document.getElementById('map') || mapInstance) return;
+            mapInstance = L.map('map').setView(location.coords, 17);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(mapInstance);
+            L.marker(location.coords).addTo(mapInstance)
+                .bindPopup(`<b>Empadão Salgados</b><br>${location.address}`).openPopup();
+        };
+
+        const setupTheme = () => {
+            const getIcon = (type, suffix = '') => document.getElementById(`theme-icon-${type}${suffix}`);
+            const toggleButton = document.getElementById('theme-toggle');
+            const toggleButtonMobile = document.getElementById('theme-toggle-mobile');
+
+            const applyTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.body.classList.toggle('dark-mode', isDark);
+                [getIcon('sun'), getIcon('sun', '-mobile')].forEach(el => el.classList.toggle('hidden', isDark));
+                [getIcon('moon'), getIcon('moon', '-mobile')].forEach(el => el.classList.toggle('hidden', !isDark));
+            };
+
+            const toggleTheme = () => {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            };
+
+            [toggleButton, toggleButtonMobile].forEach(btn => btn.addEventListener('click', toggleTheme));
+            applyTheme(localStorage.getItem('theme') || 'light');
+        };
+
+        const init = () => {
+            navigateTo('home');
+            renderProducts();
+            setupEventListeners();
+            setupTheme();
+            switchCategoryView('Frituras');
+        };
+
+        init();
+    });
+    </script>
+</body>
+</html>
+
