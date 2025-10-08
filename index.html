@@ -210,8 +210,29 @@
             background-color: var(--primary);
             color: white;
         }
+        .quantity-input {
+            color: var(--text-primary);
+        }
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        .quantity-input[type=number] {
+          -moz-appearance: textfield;
+        }
         input[type="radio"] {
             accent-color: var(--primary);
+        }
+
+        #mobile-total-bar {
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(100%);
+        }
+        #mobile-total-bar.visible {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -250,24 +271,24 @@
         </div>
     </header>
 
-    <main class="pt-24">
+    <main class="pt-24 pb-20 md:pb-0">
         <!-- HOME PAGE -->
         <section id="home-page" class="page">
             <div class="bg-bg-primary">
-                <div class="container mx-auto grid md:grid-cols-2 items-center gap-12 px-6 py-16 md:py-24">
-                    <div class="text-center md:text-left">
+                <div class="container mx-auto flex flex-col md:grid md:grid-cols-2 items-center justify-center gap-12 px-6 py-16 md:py-24">
+                    <div class="text-center md:text-left order-2 md:order-1">
                         <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-text-primary">
                             O Sabor da Festa, <br> <span class="text-primary">Direto pra Você.</span>
                         </h1>
-                        <p class="mt-6 text-lg text-text-secondary max-w-lg">
+                        <p class="mt-6 text-lg text-text-secondary max-w-lg mx-auto md:mx-0">
                             Os melhores salgados de Araraquara para sua festa, evento ou para o lanche da tarde. Qualidade e tradição em cada mordida.
                         </p>
                         <div class="mt-8">
                             <a href="#" class="btn btn-lg nav-link" data-page="menu">Monte seu Pedido Agora</a>
                         </div>
                     </div>
-                    <div>
-                        <img src="bannerHome.webp" alt="Variedade de salgados da Empadão Salgados" class="w-full">
+                    <div class="order-1 md:order-2 flex justify-center">
+                        <img src="bannerHome.webp" alt="Variedade de salgados da Empadão Salgados" class="w-full max-w-md md:max-w-full">
                     </div>
                 </div>
             </div>
@@ -279,22 +300,22 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <!-- Card 1 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://placehold.co/300x200/D92323/FFFFFF?text=salgado.webp" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <img src="coxinha.png" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Coxinha de Frango</h3>
                         </div>
                         <!-- Card 2 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://placehold.co/300x200/F2B705/1f2937?text=salgado.webp" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <img src="esfiha.png" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Esfiha de Carne</h3>
                         </div>
                         <!-- Card 3 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://placehold.co/300x200/D92323/FFFFFF?text=salgado.webp" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <img src="bolinha.png" alt="Imagem de salgado frito" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Bolinha de Queijo</h3>
                         </div>
                         <!-- Card 4 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://placehold.co/300x200/F2B705/1f2937?text=salgado.webp" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-32 object-cover">
+                            <img src="empada.png" alt="Imagem de salgado assado" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Empada de Frango</h3>
                         </div>
                     </div>
@@ -308,7 +329,7 @@
                  <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Nossa História</h2>
                  <div class="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
                     <div>
-                        <img src="https://placehold.co/500x350/D92323/FFFFFF?text=bannerSobre.webp" alt="Fachada da Empadão Salgados" class="rounded-xl shadow-lg w-full">
+                        <img src="bannerHome.webp" alt="Fachada da Empadão Salgados" class="rounded-xl shadow-lg w-full">
                     </div>
                     <div class="text-text-secondary space-y-4 text-lg">
                         <p>A <strong>Empadão Salgados</strong> nasceu da paixão por receitas de família e o desejo de levar sabor e alegria para os lares de Araraquara. Há anos, nos dedicamos a produzir salgados com ingredientes frescos e selecionados, mantendo a qualidade e o carinho em cada etapa da produção.</p>
@@ -325,17 +346,10 @@
                 <p class="text-center text-text-secondary mb-8 max-w-2xl mx-auto">Selecione o tipo de compra, o tamanho do salgado e adicione ao seu carrinho.</p>
                 
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-10">
-                    <div class="toggle-group p-1">
-                        <button id="btn-venda" class="toggle-btn active" data-type="venda">Venda</button>
-                        <button id="btn-revenda" class="toggle-btn" data-type="revenda">Revenda</button>
-                    </div>
                      <div class="toggle-group p-1">
                         <button id="btn-pequeno" class="toggle-btn active" data-type="pequeno">Pequeno</button>
                         <button id="btn-grande" class="toggle-btn" data-type="grande">Grande</button>
                     </div>
-                </div>
-
-                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-10">
                      <div class="toggle-group p-1">
                         <button id="btn-frituras" class="toggle-btn active" data-category="Frituras">🍴 Frituras</button>
                         <button id="btn-assados" class="toggle-btn" data-category="Assados">🧁 Assados</button>
@@ -344,13 +358,8 @@
 
                 <div class="grid lg:grid-cols-3 gap-12">
                     <div class="lg:col-span-2">
-                        <div id="frituras-section">
-                            <h3 class="text-2xl font-bold mb-6 border-l-4 border-primary pl-4">Frituras</h3>
-                            <div id="frituras-list" class="grid sm:grid-cols-2 gap-6"></div>
-                        </div>
-                        <div id="assados-section" class="mt-12">
-                            <h3 class="text-2xl font-bold mb-6 border-l-4 border-secondary pl-4">Assados</h3>
-                            <div id="assados-list" class="grid sm:grid-cols-2 gap-6"></div>
+                        <div id="product-list-container">
+                             <!-- Products will be rendered here -->
                         </div>
                     </div>
 
@@ -440,6 +449,15 @@
             </div>
         </div>
     </footer>
+    
+    <div id="mobile-total-bar" class="fixed bottom-0 left-0 right-0 p-4 shadow-lg md:hidden z-40">
+        <div class="container mx-auto flex justify-between items-center">
+             <div>
+                <span id="mobile-item-count" class="font-bold text-text-primary">0 itens</span>
+            </div>
+            <button id="view-cart-btn" class="text-primary font-bold">Ver carrinho</button>
+        </div>
+    </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -508,10 +526,10 @@
         const WHATSAPP_NUMBER = "5516996270205";
 
         const pages = document.querySelectorAll('.page');
-        const friturasContainer = document.getElementById('frituras-list');
-        const assadosContainer = document.getElementById('assados-list');
+        const productListContainer = document.getElementById('product-list-container');
         const cartItemsContainer = document.getElementById('cart-items');
         const clearCartBtn = document.getElementById('clear-cart-btn');
+        const mobileTotalBar = document.getElementById('mobile-total-bar');
 
         const navigateTo = (pageId) => {
             pages.forEach(page => page.classList.remove('active'));
@@ -538,8 +556,6 @@
                 document.getElementById('mobile-menu').classList.toggle('hidden');
             });
             
-            document.getElementById('btn-venda').addEventListener('click', () => switchPriceMode('venda'));
-            document.getElementById('btn-revenda').addEventListener('click', () => switchPriceMode('revenda'));
             document.getElementById('btn-pequeno').addEventListener('click', () => switchSizeMode('pequeno'));
             document.getElementById('btn-grande').addEventListener('click', () => switchSizeMode('grande'));
             
@@ -549,18 +565,21 @@
             document.getElementById('order-form').addEventListener('submit', handleOrderSubmit);
             document.getElementById('contact-whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}`;
             clearCartBtn.addEventListener('click', clearCartAndUI);
+            document.getElementById('view-cart-btn').addEventListener('click', () => {
+                document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
+            });
         };
 
         const switchCategoryView = (categoryToShow) => {
             const friturasBtn = document.getElementById('btn-frituras');
             const assadosBtn = document.getElementById('btn-assados');
-            const friturasSection = document.getElementById('frituras-section');
-            const assadosSection = document.getElementById('assados-section');
-
+            
             const isFrituras = categoryToShow === 'Frituras';
             
-            friturasSection.style.display = isFrituras ? 'block' : 'none';
-            assadosSection.style.display = isFrituras ? 'none' : 'block';
+            document.querySelectorAll('[data-category-list="Frituras"]').forEach(el => el.style.display = isFrituras ? 'grid' : 'none');
+            document.querySelectorAll('[data-category-list="Assados"]').forEach(el => el.style.display = !isFrituras ? 'grid' : 'none');
+             document.querySelectorAll('[data-category-title="Frituras"]').forEach(el => el.style.display = isFrituras ? 'block' : 'none');
+            document.querySelectorAll('[data-category-title="Assados"]').forEach(el => el.style.display = !isFrituras ? 'block' : 'none');
             
             friturasBtn.classList.toggle('active', isFrituras);
             assadosBtn.classList.toggle('active', !isFrituras);
@@ -568,8 +587,16 @@
 
 
         const renderProducts = () => {
-            friturasContainer.innerHTML = '';
-            assadosContainer.innerHTML = '';
+            productListContainer.innerHTML = `
+                <div data-category-title="Frituras" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-6 border-l-4 border-primary pl-4">Frituras</h3>
+                    <div id="frituras-list" data-category-list="Frituras" class="grid sm:grid-cols-2 gap-6"></div>
+                </div>
+                <div data-category-title="Assados" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-6 border-l-4 border-secondary pl-4">Assados</h3>
+                    <div id="assados-list" data-category-list="Assados" class="grid sm:grid-cols-2 gap-6"></div>
+                </div>
+            `;
             
             const productList = products[currentSizeMode];
 
@@ -579,67 +606,119 @@
                         <h4 class="font-bold text-md mb-4 flex-grow">${product.name}</h4>
                         <div class="flex items-center justify-center gap-3">
                             <button class="quantity-btn" data-product-id="${product.id}" data-action="decrease">-</button>
-                            <span id="quantity-${product.id}" class="text-lg font-bold w-10 text-center text-text-primary">0</span>
+                            <input type="number" id="quantity-${product.id}" data-product-id="${product.id}" class="quantity-input text-lg font-bold w-12 text-center bg-transparent focus:outline-none" value="${cart[product.id] || 0}" min="0" />
                             <button class="quantity-btn increase" data-product-id="${product.id}" data-action="increase">+</button>
                         </div>
                     </div>
                 `;
-                const container = product.category === "Frituras" ? friturasContainer : assadosContainer;
+                const container = product.category === "Frituras" ? document.getElementById('frituras-list') : document.getElementById('assados-list');
                 container.innerHTML += productCard;
             });
 
             document.querySelectorAll('.quantity-btn').forEach(btn => btn.addEventListener('click', handleQuantityChange));
+            document.querySelectorAll('.quantity-input').forEach(input => input.addEventListener('change', handleQuantityInput));
+        };
+
+        const handleQuantityInput = (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            let newQuantity = parseInt(e.target.value);
+            
+            if (isNaN(newQuantity) || newQuantity < 0) {
+                newQuantity = 0;
+            }
+
+            e.target.value = newQuantity;
+
+            if (newQuantity === 0) {
+                delete cart[productId];
+            } else {
+                cart[productId] = newQuantity;
+            }
+            updateCartAndTotals();
         };
 
         const clearCartAndUI = () => {
             cart = {};
-            updateCartDisplay();
-            
-            const productList = products[currentSizeMode];
-            productList.forEach(p => {
+            const allProducts = [...products.pequeno, ...products.grande];
+            allProducts.forEach(p => {
                 const quantityEl = document.getElementById(`quantity-${p.id}`);
-                if (quantityEl) quantityEl.textContent = '0';
+                if (quantityEl) quantityEl.value = '0';
             });
-        };
-
-        const switchPriceMode = (mode) => {
-            if (currentPriceMode === mode) return;
-            if (Object.keys(cart).length > 0 && !confirm("Mudar o tipo de preço irá limpar seu carrinho. Deseja continuar?")) return;
-            
-            currentPriceMode = mode;
-            document.getElementById('btn-venda').classList.toggle('active', mode === 'venda');
-            document.getElementById('btn-revenda').classList.toggle('active', mode === 'revenda');
-            clearCartAndUI();
+            updateCartAndTotals();
         };
 
         const switchSizeMode = (mode) => {
             if (currentSizeMode === mode) return;
-            if (Object.keys(cart).length > 0 && !confirm("Mudar o tamanho do salgado irá limpar seu carrinho. Deseja continuar?")) return;
-            
             currentSizeMode = mode;
             document.getElementById('btn-pequeno').classList.toggle('active', mode === 'pequeno');
             document.getElementById('btn-grande').classList.toggle('active', mode === 'grande');
             
-            clearCartAndUI();
             renderProducts(); 
+            switchCategoryView(document.querySelector('#btn-frituras.active') ? 'Frituras' : 'Assados');
         };
 
         const handleQuantityChange = (e) => {
             const productId = parseInt(e.target.dataset.productId);
             const action = e.target.dataset.action;
-            let currentQuantity = cart[productId] || 0;
+            const inputEl = document.getElementById(`quantity-${productId}`);
+            let currentQuantity = parseInt(inputEl.value);
 
             if (action === 'increase') {
                 currentQuantity++;
             } else if (action === 'decrease' && currentQuantity > 0) {
                 currentQuantity--;
             }
+            
+            inputEl.value = currentQuantity;
 
-            if (currentQuantity === 0) delete cart[productId];
-            else cart[productId] = currentQuantity;
+            if (currentQuantity === 0) {
+                delete cart[productId];
+            } else {
+                cart[productId] = currentQuantity;
+            }
+            updateCartAndTotals();
+        };
 
+        const updateCartAndTotals = () => {
             updateCartDisplay();
-            document.getElementById(`quantity-${productId}`).textContent = cart[productId] || 0;
+            updateFloatingTotal();
+        }
+
+        const calculateTotal = () => {
+            let totalItems = 0;
+            let totalPrice = 0;
+            const allProducts = [...products.pequeno, ...products.grande];
+
+            for(const productId in cart) {
+                const quantity = cart[productId];
+                totalItems += quantity;
+
+                const product = allProducts.find(p => p.id == productId);
+                if (!product) continue;
+                
+                const isGrande = product.id >= 100;
+                const size = isGrande ? 'grande' : 'pequeno';
+
+                let price;
+                if (product.special === 'espetinho') {
+                    price = prices.espetinho;
+                } else {
+                    price = prices[currentPriceMode][size];
+                }
+                totalPrice += quantity * price;
+            }
+            return { totalItems, totalPrice };
+        }
+
+        const updateFloatingTotal = () => {
+            const { totalItems } = calculateTotal();
+            
+            if (totalItems > 0) {
+                document.getElementById('mobile-item-count').textContent = `${totalItems} ${totalItems > 1 ? 'itens' : 'item'}`;
+                mobileTotalBar.classList.add('visible');
+            } else {
+                mobileTotalBar.classList.remove('visible');
+            }
         };
 
         const updateCartDisplay = () => {
@@ -654,24 +733,33 @@
             cartItemsContainer.innerHTML = '';
             const allProducts = [...products.pequeno, ...products.grande];
 
-            const cartFrituras = [];
-            const cartAssados = [];
+            const cartPequenos = { Frituras: [], Assados: [] };
+            const cartGrandes = { Frituras: [], Assados: [] };
 
             Object.entries(cart).forEach(([productId, quantity]) => {
                 const product = allProducts.find(p => p.id == productId);
                 if (!product) return;
                 
                 const itemHtml = `<div class="flex justify-between items-center text-sm text-text-primary"><span><strong>${quantity}x</strong> ${product.name}</span></div>`;
-
-                if(product.category === 'Frituras') cartFrituras.push(itemHtml);
-                else cartAssados.push(itemHtml);
+                
+                const isGrande = product.id >= 100;
+                if(isGrande) {
+                    cartGrandes[product.category].push(itemHtml);
+                } else {
+                    cartPequenos[product.category].push(itemHtml);
+                }
             });
 
-            if (cartFrituras.length > 0) {
-                cartItemsContainer.innerHTML += `<h4 class="font-semibold text-primary text-sm">Frituras</h4>` + cartFrituras.join('');
+            if (cartGrandes.Frituras.length > 0 || cartGrandes.Assados.length > 0) {
+                 cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-base mt-2">Grandes</h4>`;
+                 if(cartGrandes.Frituras.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Frituras</h5>` + cartGrandes.Frituras.join('');
+                 if(cartGrandes.Assados.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-secondary text-sm mt-1">Assados</h5>` + cartGrandes.Assados.join('');
             }
-            if (cartAssados.length > 0) {
-                cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-sm mt-2">Assados</h4>` + cartAssados.join('');
+
+            if (cartPequenos.Frituras.length > 0 || cartPequenos.Assados.length > 0) {
+                 cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-base mt-2">Pequenos</h4>`;
+                 if(cartPequenos.Frituras.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Frituras</h5>` + cartPequenos.Frituras.join('');
+                 if(cartPequenos.Assados.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-secondary text-sm mt-1">Assados</h5>` + cartPequenos.Assados.join('');
             }
         };
         
@@ -685,29 +773,51 @@
             if (!name || !address) return alert("Por favor, preencha seu nome e endereço.");
             
             let message = "Olá, gostaria de finalizar meu pedido:\n\n";
-            let total = 0;
+            const { totalPrice } = calculateTotal();
             const allProducts = [...products.pequeno, ...products.grande];
+
+            const grandes = { Frituras: [], Assados: [] };
+            const pequenos = { Frituras: [], Assados: [] };
 
             Object.entries(cart).forEach(([productId, quantity]) => {
                 const product = allProducts.find(p => p.id == productId);
                 if (!product) return;
                 
+                const isGrande = product.id >= 100;
+                const size = isGrande ? 'grande' : 'pequeno';
+                
                 let price;
                 if (product.special === 'espetinho') {
                     price = prices.espetinho;
                 } else {
-                    price = prices[currentPriceMode][currentSizeMode];
+                    price = prices[currentPriceMode][size];
                 }
                 const subtotal = quantity * price;
-                total += subtotal;
-                message += `*${quantity}x* ${product.name} - *R$ ${subtotal.toFixed(2).replace('.', ',')}*\n`;
+                const messageLine = `*${quantity}x* ${product.name} - *R$ ${subtotal.toFixed(2).replace('.', ',')}*\n`;
+
+                if(isGrande) {
+                    grandes[product.category].push(messageLine);
+                } else {
+                    pequenos[product.category].push(messageLine);
+                }
             });
+
+            if (grandes.Frituras.length > 0 || grandes.Assados.length > 0) {
+                message += "*GRANDES:*\n";
+                if(grandes.Frituras.length > 0) message += "-- Frituras --\n" + grandes.Frituras.join('');
+                if(grandes.Assados.length > 0) message += "-- Assados --\n" + grandes.Assados.join('');
+                message += "\n";
+            }
+            if (pequenos.Frituras.length > 0 || pequenos.Assados.length > 0) {
+                message += "*PEQUENOS:*\n";
+                 if(pequenos.Frituras.length > 0) message += "-- Frituras --\n" + pequenos.Frituras.join('');
+                if(pequenos.Assados.length > 0) message += "-- Assados --\n" + pequenos.Assados.join('');
+                message += "\n";
+            }
             
-            message += `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
+            message += `*Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}*\n`;
             message += `\n----------------------------------\n*Dados para Entrega*\n----------------------------------\n`;
             message += `*Nome:* ${name}\n*Endereço:* ${address}\n`;
-            message += `*Tipo de Pedido:* ${currentPriceMode.charAt(0).toUpperCase() + currentPriceMode.slice(1)}\n`;
-            message += `*Tamanho:* ${currentSizeMode.charAt(0).toUpperCase() + currentSizeMode.slice(1)}\n`;
             message += `*Forma de Pagamento:* ${paymentMethod}`;
 
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
