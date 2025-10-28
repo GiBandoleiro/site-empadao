@@ -330,7 +330,7 @@
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <!-- SEO: Adicionado href e alt text otimizado -->
             <a href="#home-page" class="nav-link flex items-center gap-2" data-page="home">
-    		    <img src="logo.png" alt="Logo Empadão Salgados Araraquara" class="h-20 w-auto">	
+    		    <img src="logo.webp" alt="Logo Empadão Salgados Araraquara" class="h-20 w-auto">	
             </a>
             <div class="hidden md:flex items-center space-x-2">
                 <!-- SEO: Adicionado href="#page-id" para links de navegação -->
@@ -390,35 +390,55 @@
             <div class="py-20">
                 <div class="container mx-auto px-6">
                     <!-- SEO: H2 para nova seção -->
-                    <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Nossos Sabores</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Assados</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
                         <!-- Card 1 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
                             <!-- SEO: Alt text descritivo -->
-                            <img src="coxinha.png" alt="Coxinha de frango da Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
-                            <h3 class="font-semibold text-lg text-text-primary">Coxinha de Frango</h3>
+                            <img src="vulcao.webp" alt="Vulcão de Queijo do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Vulcão de Queijo</h3>
                         </div>
                         <!-- Card 2 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
                             <!-- SEO: Alt text descritivo -->
-                            <img src="esfiha.png" alt="Esfiha de carne da Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <img src="esfihaAssada.webp" alt="Esfiha de carne do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Esfiha de Carne</h3>
                         </div>
                         <!-- Card 3 -->
                         <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
                             <!-- SEO: Alt text descritivo -->
-                            <img src="bolinha.png" alt="Bolinha de queijo da Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
-                            <h3 class="font-semibold text-lg text-text-primary">Bolinha de Queijo</h3>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
-                            <!-- SEO: Alt text descritivo -->
-                            <img src="empada.png" alt="Empada de frango da Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <img src="empada.webp" alt="Empada de Frango do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
                             <h3 class="font-semibold text-lg text-text-primary">Empada de Frango</h3>
                         </div>
                     </div>
                 </div>
-            </div>
+
+	    <!-- Featured Savories Section -->
+            <div class="py-20">
+                <div class="container mx-auto px-6">
+                    <!-- SEO: H2 para nova seção -->
+                    <h2 class="text-3xl md:text-4xl font-display text-center mb-12 section-title">Assados</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                        <!-- Card 1 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <!-- SEO: Alt text descritivo -->
+                            <img src="coxinha.webp" alt="Coxinha do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Coxinha de Frango</h3>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <!-- SEO: Alt text descritivo -->
+                            <img src="esfiha.webp" alt="Esfiha de carne do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Esfiha de Carne</h3>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="card text-center p-4 transform hover:-translate-y-2 transition-transform duration-300">
+                            <!-- SEO: Alt text descritivo -->
+                            <img src="bolinha.webp" alt="Bolinha de queijo do Empadão Salgados" class="rounded-lg mb-4 w-full h-60 object-cover">
+                            <h3 class="font-semibold text-lg text-text-primary">Bolinha de Queijo</h3>
+                        </div>
+                    </div>
+                </div>
         </section>
 
         <!-- ABOUT PAGE -->
@@ -449,8 +469,8 @@
                         <button id="btn-grande" class="toggle-btn" data-type="grande">Grande</button>
                     </div>
                      <div class="toggle-group p-1">
-                        <button id="btn-frituras" class="toggle-btn active" data-category="Frituras">🍴 Frituras</button>
-                        <button id="btn-assados" class="toggle-btn" data-category="Assados">🧁 Assados</button>
+                        <button id="btn-fritos" class="toggle-btn active" data-category="Fritos">Fritos</button>
+                        <button id="btn-assados" class="toggle-btn" data-category="Assados">Assados</button>
                     </div>
                 </div>
 
@@ -521,12 +541,11 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.182-.15-.38-.25z"/></svg>
                                 </a>
                             </div>
-                            <p><strong>Instagram:</strong><br><a href="https://www.instagram.com/empadaosalgados.vercel_araraquara" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">@empadaosalgados.vercel_araraquara</a></p>
+                            <p><strong>Instagram:</strong><br><a href="https://www.instagram.com/empadaosalgados_araraquara" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">@empadaosalgados_araraquara</a></p>
                             <div>
                                 <p><strong>Horário de Funcionamento:</strong></p>
                                 <ul class="list-inside ml-2">
-                                    <li>Terça a Sábado: 05:30 – 18:00</li>
-                                    <li>Segunda: 05:30 – 18:00</li>
+                                    <li>Segunda a Sábado: 05:30 – 18:00</li>
                                     <li>Domingo: Fechado</li>
                                 </ul>
                             </div>
@@ -546,10 +565,10 @@
             <p class="text-text-secondary mb-6">Qualidade e tradição em Araraquara-SP</p>
             
             <!-- SEO: Adicionado NAP (Name, Address, Phone) no rodapé para reforço -->
-            <div class="text-sm text-text-secondary mb-6 space-y-2">
+            <div hidden class="text-sm text-text-secondary mb-6 space-y-2">
                 <p>R. Pará, 16 - Jd. Brasil (Vila Xavier), Araraquara - SP</p>
                 <p>Telefone: (16) 3337-3713 | WhatsApp: (16) 99627-0205</p>
-                <p>Instagram: <a href="https://www.instagram.com/empadaosalgados.vercel_araraquara" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">@empadaosalgados.vercel_araraquara</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/empadaosalgados_araraquara" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">@empadaosalgados_araraquara</a></p>
             </div>
             
             <div class="mt-8 border-t border-border pt-6">
@@ -572,18 +591,18 @@
         const products = {
             pequeno: [
                 // Fritos
-                { id: 1, name: "Balãozinho De Presunto e Queijo", category: "Frituras" },
-                { id: 2, name: "Bolinha De Queijo", category: "Frituras" },
-                { id: 3, name: "Bolinha De Frango c/Catupiry", category: "Frituras" },
-                { id: 4, name: "Coxinha De Frango", category: "Frituras" },
-                { id: 5, name: "Croquete De Carne", category: "Frituras" },
-                { id: 6, name: "Kibe Com Carne", category: "Frituras" },
-                { id: 7, name: "Kibe Com Catupiry", category: "Frituras" },
-                { id: 8, name: "Risolis De Carne", category: "Frituras" },
-                { id: 9, name: "Risolis De Presunto e Mussarela", category: "Frituras" },
-                { id: 10, name: "Risolis De Queijo", category: "Frituras" },
-                { id: 11, name: "Risolis De Milho c/ Catupiry", category: "Frituras" },
-                { id: 12, name: "Espetinho De Frango", category: "Frituras", special: 'espetinho' },
+                { id: 1, name: "Balãozinho De Presunto e Queijo", category: "Fritos" },
+                { id: 2, name: "Bolinha De Queijo", category: "Fritos" },
+                { id: 3, name: "Bolinha De Frango c/Catupiry", category: "Fritos" },
+                { id: 4, name: "Coxinha De Frango", category: "Fritos" },
+                { id: 5, name: "Croquete De Carne", category: "Fritos" },
+                { id: 6, name: "Kibe Com Carne", category: "Fritos" },
+                { id: 7, name: "Kibe Com Catupiry", category: "Fritos" },
+                { id: 8, name: "Risolis De Carne", category: "Fritos" },
+                { id: 9, name: "Risolis De Presunto e Mussarela", category: "Fritos" },
+                { id: 10, name: "Risolis De Queijo", category: "Fritos" },
+                { id: 11, name: "Risolis De Milho c/ Catupiry", category: "Fritos" },
+                { id: 12, name: "Espetinho De Frango", category: "Fritos", special: 'espetinho' },
                 // Assados
                 { id: 13, name: "Doguinho (Salsicha)", category: "Assados" },
                 { id: 14, name: "Esfiha De Carne", category: "Assados" },
@@ -597,17 +616,17 @@
             ],
             grande: [
                 // Fritos
-                { id: 101, name: "Balão De Queijo", category: "Frituras" },
-                { id: 102, name: "Bola De Frango c/ Catupiry", category: "Frituras" },
-                { id: 103, name: "Coxinha De Carne", category: "Frituras" },
-                { id: 104, name: "Coxinha De Frango", category: "Frituras" },
-                { id: 105, name: "Croquete De Carne", category: "Frituras" },
-                { id: 106, name: "Croquete De Presunto E Queijo", category: "Frituras" },
-                { id: 107, name: "Kibe c/Carne", category: "Frituras" },
-                { id: 108, name: "Kibe c/Catupiry", category: "Frituras" },
-                { id: 109, name: "Risolis De Carne", category: "Frituras" },
-                { id: 110, name: "Risolis De Presunto E Queijo", category: "Frituras" },
-                { id: 111, name: "Risolis De Queijo", category: "Frituras" },
+                { id: 101, name: "Balão De Queijo", category: "Fritos" },
+                { id: 102, name: "Bola De Frango c/ Catupiry", category: "Fritos" },
+                { id: 103, name: "Coxinha De Carne", category: "Fritos" },
+                { id: 104, name: "Coxinha De Frango", category: "Fritos" },
+                { id: 105, name: "Croquete De Carne", category: "Fritos" },
+                { id: 106, name: "Croquete De Presunto E Queijo", category: "Fritos" },
+                { id: 107, name: "Kibe c/Carne", category: "Fritos" },
+                { id: 108, name: "Kibe c/Catupiry", category: "Fritos" },
+                { id: 109, name: "Risolis De Carne", category: "Fritos" },
+                { id: 110, name: "Risolis De Presunto E Queijo", category: "Fritos" },
+                { id: 111, name: "Risolis De Queijo", category: "Fritos" },
                 // Assados
                 { id: 112, name: "Enrolado De Salsicha", category: "Assados" },
                 { id: 113, name: "Esfiha De Carne", category: "Assados" },
@@ -667,7 +686,7 @@
             document.getElementById('btn-pequeno').addEventListener('click', () => switchSizeMode('pequeno'));
             document.getElementById('btn-grande').addEventListener('click', () => switchSizeMode('grande'));
             
-            document.getElementById('btn-frituras').addEventListener('click', () => switchCategoryView('Frituras'));
+            document.getElementById('btn-fritos').addEventListener('click', () => switchCategoryView('Fritos'));
             document.getElementById('btn-assados').addEventListener('click', () => switchCategoryView('Assados'));
 
             document.getElementById('order-form').addEventListener('submit', handleOrderSubmit);
@@ -679,26 +698,26 @@
         };
 
         const switchCategoryView = (categoryToShow) => {
-            const friturasBtn = document.getElementById('btn-frituras');
+            const fritosBtn = document.getElementById('btn-fritos');
             const assadosBtn = document.getElementById('btn-assados');
             
-            const isFrituras = categoryToShow === 'Frituras';
+            const isFritos = categoryToShow === 'Fritos';
             
-            document.querySelectorAll('[data-category-list="Frituras"]').forEach(el => el.style.display = isFrituras ? 'grid' : 'none');
-            document.querySelectorAll('[data-category-list="Assados"]').forEach(el => el.style.display = !isFrituras ? 'grid' : 'none');
-             document.querySelectorAll('[data-category-title="Frituras"]').forEach(el => el.style.display = isFrituras ? 'block' : 'none');
-            document.querySelectorAll('[data-category-title="Assados"]').forEach(el => el.style.display = !isFrituras ? 'block' : 'none');
+            document.querySelectorAll('[data-category-list="Fritos"]').forEach(el => el.style.display = isFritos ? 'grid' : 'none');
+            document.querySelectorAll('[data-category-list="Assados"]').forEach(el => el.style.display = !isFritos ? 'grid' : 'none');
+             document.querySelectorAll('[data-category-title="Fritos"]').forEach(el => el.style.display = isFritos ? 'block' : 'none');
+            document.querySelectorAll('[data-category-title="Assados"]').forEach(el => el.style.display = !isFritos ? 'block' : 'none');
             
-            friturasBtn.classList.toggle('active', isFrituras);
-            assadosBtn.classList.toggle('active', !isFrituras);
+            fritosBtn.classList.toggle('active', isFritos);
+            assadosBtn.classList.toggle('active', !isFritos);
         };
 
 
         const renderProducts = () => {
             productListContainer.innerHTML = `
-                <div data-category-title="Frituras" class="mt-8">
-                    <h3 class="text-2xl font-bold mb-6 border-l-4 border-primary pl-4">Frituras</h3>
-                    <div id="frituras-list" data-category-list="Frituras" class="grid sm:grid-cols-2 gap-6"></div>
+                <div data-category-title="Fritos" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-6 border-l-4 border-primary pl-4">Fritos</h3>
+                    <div id="fritos-list" data-category-list="Fritos" class="grid sm:grid-cols-2 gap-6"></div>
                 </div>
                 <div data-category-title="Assados" class="mt-8">
                     <h3 class="text-2xl font-bold mb-6 border-l-4 border-secondary pl-4">Assados</h3>
@@ -720,7 +739,7 @@
                         </div>
                     </div>
                 `;
-                const container = product.category === "Frituras" ? document.getElementById('frituras-list') : document.getElementById('assados-list');
+                const container = product.category === "Fritos" ? document.getElementById('fritos-list') : document.getElementById('assados-list');
                 container.innerHTML += productCard;
             });
 
@@ -763,7 +782,7 @@
             document.getElementById('btn-grande').classList.toggle('active', mode === 'grande');
             
             renderProducts();	
-            switchCategoryView(document.querySelector('#btn-frituras.active') ? 'Frituras' : 'Assados');
+            switchCategoryView(document.querySelector('#btn-fritos.active') ? 'Fritos' : 'Assados');
         };
 
         const handleQuantityChange = (e) => {
@@ -842,8 +861,8 @@
             cartItemsContainer.innerHTML = '';
             const allProducts = [...products.pequeno, ...products.grande];
 
-            const cartPequenos = { Frituras: [], Assados: [] };
-            const cartGrandes = { Frituras: [], Assados: [] };
+            const cartPequenos = { Fritos: [], Assados: [] };
+            const cartGrandes = { Fritos: [], Assados: [] };
 
             Object.entries(cart).forEach(([productId, quantity]) => {
                 const product = allProducts.find(p => p.id == productId);
@@ -859,15 +878,15 @@
                 }
             });
 
-            if (cartGrandes.Frituras.length > 0 || cartGrandes.Assados.length > 0) {
+            if (cartGrandes.Fritos.length > 0 || cartGrandes.Assados.length > 0) {
                  cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-base mt-2">Grandes</h4>`;
-                 if(cartGrandes.Frituras.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Frituras</h5>` + cartGrandes.Frituras.join('');
+                 if(cartGrandes.Fritos.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Fritos</h5>` + cartGrandes.Fritos.join('');
                  if(cartGrandes.Assados.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-secondary text-sm mt-1">Assados</h5>` + cartGrandes.Assados.join('');
             }
 
-            if (cartPequenos.Frituras.length > 0 || cartPequenos.Assados.length > 0) {
+            if (cartPequenos.Fritos.length > 0 || cartPequenos.Assados.length > 0) {
                  cartItemsContainer.innerHTML += `<h4 class="font-semibold text-secondary text-base mt-2">Pequenos</h4>`;
-                 if(cartPequenos.Frituras.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Frituras</h5>` + cartPequenos.Frituras.join('');
+                 if(cartPequenos.Fritos.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-primary text-sm mt-1">Fritos</h5>` + cartPequenos.Fritos.join('');
                  if(cartPequenos.Assados.length > 0) cartItemsContainer.innerHTML += `<h5 class="font-medium text-secondary text-sm mt-1">Assados</h5>` + cartPequenos.Assados.join('');
             }
         };
@@ -885,8 +904,8 @@
             const { totalPrice } = calculateTotal();
             const allProducts = [...products.pequeno, ...products.grande];
 
-            const grandes = { Frituras: [], Assados: [] };
-            const pequenos = { Frituras: [], Assados: [] };
+            const grandes = { Fritos: [], Assados: [] };
+            const pequenos = { Fritos: [], Assados: [] };
 
             Object.entries(cart).forEach(([productId, quantity]) => {
                 const product = allProducts.find(p => p.id == productId);
@@ -911,15 +930,15 @@
                 }
             });
 
-            if (grandes.Frituras.length > 0 || grandes.Assados.length > 0) {
+            if (grandes.Fritos.length > 0 || grandes.Assados.length > 0) {
                 message += "*GRANDES:*\n";
-                if(grandes.Frituras.length > 0) message += "-- Frituras --\n" + grandes.Frituras.join('');
+                if(grandes.Fritos.length > 0) message += "-- Fritos --\n" + grandes.Fritos.join('');
                 if(grandes.Assados.length > 0) message += "-- Assados --\n" + grandes.Assados.join('');
                 message += "\n";
             }
-            if (pequenos.Frituras.length > 0 || pequenos.Assados.length > 0) {
+            if (pequenos.Fritos.length > 0 || pequenos.Assados.length > 0) {
                 message += "*PEQUENOS:*\n";
-                 if(pequenos.Frituras.length > 0) message += "-- Frituras --\n" + pequenos.Frituras.join('');
+                 if(pequenos.Fritos.length > 0) message += "-- Fritos --\n" + pequenos.Fritos.join('');
                 if(pequenos.Assados.length > 0) message += "-- Assados --\n" + pequenos.Assados.join('');
                 message += "\n";
             }
@@ -990,7 +1009,7 @@
             renderProducts();
             setupEventListeners();
             setupTheme();
-            switchCategoryView('Frituras');
+            switchCategoryView('Fritos');
         };
 
         init();
