@@ -587,64 +587,68 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const products = {
-            pequeno: [
-                // Fritos
-                { id: 1, name: "Balãozinho De Presunto e Queijo", category: "Fritos" },
-                { id: 2, name: "Bolinha De Queijo", category: "Fritos" },
-                { id: 3, name: "Bolinha De Frango c/Catupiry", category: "Fritos" },
-                { id: 4, name: "Coxinha De Frango", category: "Fritos" },
-                { id: 5, name: "Croquete De Carne", category: "Fritos" },
-                { id: 6, name: "Kibe Com Carne", category: "Fritos" },
-                { id: 7, name: "Kibe Com Catupiry", category: "Fritos" },
-                { id: 8, name: "Risolis De Carne", category: "Fritos" },
-                { id: 9, name: "Risolis De Presunto e Mussarela", category: "Fritos" },
-                { id: 10, name: "Risolis De Queijo", category: "Fritos" },
-                { id: 11, name: "Risolis De Milho c/ Catupiry", category: "Fritos" },
-                { id: 12, name: "Espetinho De Frango", category: "Fritos", special: 'espetinho' },
-                // Assados
-                { id: 13, name: "Doguinho (Salsicha)", category: "Assados" },
-                { id: 14, name: "Kibe de carne", category: "Assados" },
-                { id: 15, name: "Esfiha de frango com catupiry", category: "Assados" },
-                { id: 16, name: "Empada De Frango", category: "Assados" },
-                { id: 17, name: "Empada De Palmito", category: "Assados" },
-                { id: 18, name: "Empada De Brócolis E Queijo c/Catupiry", category: "Assados" },
-                { id: 19, name: "Empada De calabresa c/ Catupiry", category: "Assados" },
-                { id: 20, name: "Pãozinho De Calabresa c/ Catupiry", category: "Assados" },
-                { id: 21, name: "Pãozinho De Brócolis E Mussarela", category: "Assados" },
-            ],
-            grande: [
-                // Fritos
-                { id: 101, name: "Balão De Queijo", category: "Fritos" },
-                { id: 102, name: "Bola De Frango c/ Catupiry", category: "Fritos" },
-                { id: 103, name: "Coxinha De Carne", category: "Fritos" },
-                { id: 104, name: "Coxinha De Frango", category: "Fritos" },
-                { id: 105, name: "Croquete De Carne", category: "Fritos" },
-                { id: 106, name: "Croquete De Presunto E Queijo", category: "Fritos" },
-                { id: 107, name: "Kibe c/Carne", category: "Fritos" },
-                { id: 108, name: "Kibe c/Catupiry", category: "Fritos" },
-                { id: 109, name: "Risolis De Carne", category: "Fritos" },
-                { id: 110, name: "Risolis De Presunto E Queijo", category: "Fritos" },
-                { id: 111, name: "Risolis De Queijo", category: "Fritos" },
-                // Assados
-                { id: 112, name: "Enrolado De Salsicha", category: "Assados" },
-                { id: 113, name: "Esfiha De Carne", category: "Assados" },
-                { id: 114, name: "Esfiha De Frango c/ Catupiry", category: "Assados" },
-                { id: 115, name: "Empada De Frango", category: "Assados" },
-                { id: 116, name: "Empada De Palmito", category: "Assados" },
-                { id: 117, name: "Hambúrguer Com Catupiry", category: "Assados" },
-                { id: 118, name: "Titanic De Calabresa c/Catupiry", category: "Assados" },
-                { id: 119, name: "Titanic De Carne c/ Bacon", category: "Assados" },
-                { id: 120, name: "Vulcão De Queijo", category: "Assados" },
-            ]
-        };
+document.addEventListener('DOMContentLoaded', () => {
+    const products = {
+        pequeno: [
+            // Fritos
+            { id: 1, name: "Balãozinho De Presunto e Queijo", category: "Fritos" },
+            { id: 2, name: "Bolinha De Queijo", category: "Fritos" },
+            { id: 3, name: "Bolinha De Frango c/Catupiry", category: "Fritos" },
+            { id: 4, name: "Coxinha De Frango", category: "Fritos" },
+            { id: 5, name: "Croquete De Carne", category: "Fritos" },
+            { id: 6, name: "Kibe Com Carne", category: "Fritos" },
+            { id: 7, name: "Kibe Com Catupiry", category: "Fritos" },
+            /* REMOVIDOS:
+            { id: 8, name: "Risolis De Carne", category: "Fritos" },
+            { id: 9, name: "Risolis De Presunto e Mussarela", category: "Fritos" },
+            { id: 10, name: "Risolis De Queijo", category: "Fritos" },
+            */
+            { id: 11, name: "Balãozinho De Milho c/ Catupiry", category: "Fritos" },
+            { id: 12, name: "Espetinho De Frango", category: "Fritos", special: 'espetinho' },
+            // Assados
+            { id: 13, name: "Doguinho (Salsicha)", category: "Assados" },
+            { id: 14, name: "Kibe de carne", category: "Assados" },
+            { id: 15, name: "Esfiha de frango com catupiry", category: "Assados" },
+            { id: 16, name: "Empada De Frango", category: "Assados" },
+            { id: 17, name: "Empada De Palmito", category: "Assados" },
+            { id: 18, name: "Empada De Brócolis E Queijo c/Catupiry", category: "Assados" },
+            { id: 19, name: "Empada De calabresa c/ Catupiry", category: "Assados" },
+            { id: 20, name: "Pãozinho De Calabresa c/ Catupiry", category: "Assados" },
+            { id: 21, name: "Pãozinho De Brócolis E Mussarela", category: "Assados" },
+        ],
+        grande: [
+            // Fritos
+            { id: 101, name: "Balão De Queijo", category: "Fritos" },
+            { id: 102, name: "Bola De Frango c/ Catupiry", category: "Fritos" },
+            { id: 103, name: "Coxinha De Carne", category: "Fritos" },
+            { id: 104, name: "Coxinha De Frango", category: "Fritos" },
+            { id: 105, name: "Croquete De Carne", category: "Fritos" },
+            { id: 106, name: "Croquete De Presunto E Queijo", category: "Fritos" },
+            { id: 107, name: "Kibe c/Carne", category: "Fritos" },
+            { id: 108, name: "Kibe c/Catupiry", category: "Fritos" },
+            /* REMOVIDOS TODOS OS RISOLIS GRANDES:
+            { id: 109, name: "Risolis De Carne", category: "Fritos" },
+            { id: 110, name: "Risolis De Presunto E Queijo", category: "Fritos" },
+            { id: 111, name: "Risolis De Queijo", category: "Fritos" },
+            */
+            // Assados
+            { id: 112, name: "Enrolado De Salsicha", category: "Assados" },
+            { id: 113, name: "Esfiha De Carne", category: "Assados" },
+            { id: 114, name: "Esfiha De Frango c/ Catupiry", category: "Assados" },
+            { id: 115, name: "Empada De Frango", category: "Assados" },
+            { id: 116, name: "Empada De Palmito", category: "Assados" },
+            { id: 117, name: "Hambúrguer Com Catupiry", category: "Assados" },
+            { id: 118, name: "Titanic De Calabresa c/Catupiry", category: "Assados" },
+            { id: 119, name: "Titanic De Carne c/ Bacon", category: "Assados" },
+            { id: 120, name: "Vulcão De Queijo", category: "Assados" },
+        ]
+    };
 
-        const prices = {
-            venda: { pequeno: 1.00, grande: 6.50 },
-            revenda: { pequeno: 0.80, grande: 4.00 },
-            espetinho: 1.50
-        };
+    const prices = {
+        venda: { pequeno: 1.00, grande: 6.50 },
+        revenda: { pequeno: 0.80, grande: 4.00 },
+        espetinho: 1.50
+    };
 
         let currentPriceMode = 'venda';
         let currentSizeMode = 'pequeno';
